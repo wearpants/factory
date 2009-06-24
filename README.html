@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/*
+Author: Peter Parente
+Date: 2008/01/22
+Version: 1.0
+Copyright: This stylesheet has been placed in the public domain - free to edit and use for all uses.
+*/
+
+body {
+  font: 100% serif;
+  background: #ffffff;
+  color: black;
+  margin: 2em;
+  padding: 0em 2em;
+  background-color: honeydew;
+}
+
+p.topic-title {
+  font-weight: bold;
+}
+
+table.docinfo {
+  text-align: left;
+  margin: 2em 0em;
+}
+
+a[href] {
+  color: #436976;
+  background-color: transparent;
+}
+
+a.toc-backref {
+  text-decoration: none;
+}
+
+h1 a[href] {
+  color: #003a6b;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a.strong {
+  font-weight: bold;
+}
+
+img {
+  margin: 0;
+  border: 0;
+}
+
+p {
+  margin: 0.5em 0 1em 0;
+  line-height: 1.5em;
+}
+
+p a:visited {
+  color: purple;
+  background-color: transparent;
+}
+
+p a:active {
+  color: red;
+  background-color: transparent;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+p img {
+  border: 0;
+  margin: 0;
+}
+
+p.rubric {
+  font-weight: bold;
+  font-style: italic;
+}
+
+h1.title {
+  color: #003a6b;
+  font-size: 250%;
+  margin-bottom: 0em;
+}
+
+h2.subtitle {
+  color: #003a6b;
+  border-bottom: 0px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #555;
+  background-color: transparent;
+  margin: 0em;
+  padding-top: 0.5em;
+}
+
+h1 {
+  font-size: 160%;
+  margin-bottom: 0.5em;
+  border-bottom: 2px solid #aaa;
+}
+
+h2 {
+  font-size: 140%;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid #aaa;
+}
+
+h3 {
+  font-size: 130%;
+  margin-bottom: 0.5em;
+}
+
+h4 {
+  font-size: 110%;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+h5 {
+  font-size: 105%;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+h6 {
+  font-size: 100%;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+dt {
+  font-style: italic;
+}
+
+dd {
+  margin-bottom: 1.5em;
+}
+
+div.admonition, div.note, div.tip, div.caution, div.important {
+  margin: 2em 2em;
+  padding: 0em 1em;
+  border-top: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  border-bottom: 2px solid #555;
+  border-right: 2px solid #555;
+}
+
+div.important {
+  background: transparent url('../images/important.png') 10px 2px no-repeat;
+}
+
+div.caution {
+  background: transparent url('../images/caution.png') 10px 2px no-repeat;
+}
+
+div.note {
+  background: transparent url('../images/note.png') 10px 2px no-repeat;
+}
+
+div.tip {
+  background: transparent url('../images/tip.png') 10px 2px no-repeat;
+}
+
+div.admonition-example {
+  background: transparent url('../images/tip.png') 10px 2px no-repeat;
+}
+
+div.admonition-critical-example {
+  background: transparent url('../images/important.png') 10px 2px no-repeat;
+}
+
+p.admonition-title {
+  font-weight: bold;
+  border-bottom: 1px solid #aaa;
+  padding-left: 30px;
+}
+
+table.docutils {
+  text-align: left;
+  border: 1px solid gray;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0em;
+}
+
+table.docutils caption {
+  font-style: italic;
+}
+
+table.docutils td, table.docutils th {
+  padding: 0.25em 0.5em;
+}
+
+table.docutils th {
+  background-color: #dddddd;
+}
+
+div.sidebar {
+  width: 33%;
+  float: right;
+  margin: 0em 2em;
+  padding: 0em 1em;
+  border-top: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  border-bottom: 2px solid #555;
+  border-right: 2px solid #555;
+}
+
+p.sidebar-title {
+  margin-bottom: 0em;
+  color: #003a6b;
+  border-bottom: 1px solid #aaa;
+  font-weight: bold;
+}
+
+p.sidebar-subtitle {
+  margin-top: 0em;
+  font-style: italic;
+  color: #003a6b;
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+  background-color: lightsteelblue;
+}
+
+code, tt {
+  color: #000066;
+}
+</style>
+</head>
+<body>
+<div class="document">
+<div class="section">
+<h1><a id="overview" name="overview">Overview</a></h1>
+<p>Factory is an object-oriented approach to partial function application, also known as currying. The Factory module is a more powerful implementation of this pattern. Some improvements include:</p>
+<ul class="simple">
+<li>safer, as invalid arguments are detected immediately, instead of at call time</li>
+<li>intelligent support for classes, instance methods &amp; all other callables</li>
+<li>bound arguments can be inspected and modified as attributes</li>
+<li>several convenient methods for (re)binding arguments</li>
+<li>no &quot;Russian dolls&quot; of nested lambdas</li>
+</ul>
+<p>Using Factories can:</p>
+<ul class="simple">
+<li>simplify writing callbacks</li>
+<li>reduce bugs in concurrent applications</li>
+<li>provide easy lazy evaluation</li>
+</ul>
+</div>
+<div class="section">
+<h1><a id="installation" name="installation">Installation</a></h1>
+<p>The Factory module is available from the <a class="reference" href="http://pypi.python.org/pypi/Factory/">Cheeseshop</a>.  The source code is available from the <a class="reference" href="http://code.google.com/p/python-factory/">Google Code project page</a>.</p>
+<p>The Factory module can be installed like any other pure Python module.  Setuptools is supported but not required.  You may also include the <tt class="docutils literal"><span class="pre">Factory.py</span></tt> file directly in your project's source tree, but you must retain the copyright notice and version and attribution information.</p>
+<p>To run tests for the module, execute the following commands in the <tt class="docutils literal"><span class="pre">Factory/</span></tt> directory:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">python</span> <span class="pre">doctest_Factory.py</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">nosetests</span> <span class="pre">test_Factory.py</span></tt></li>
+</ul>
+</div>
+<div class="section">
+<h1><a id="about-currying" name="about-currying">About Currying</a></h1>
+<p>Currying creates a new function from an existing one by binding some of the original's arguments:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; def adder(x, y):
+...     return x + y
+&gt;&gt;&gt; add_lambda = lambda y: adder(1, y)
+&gt;&gt;&gt; add_lambda(10)
+11
+</pre>
+<p>As of Python 2.5, this pattern is built in with the <a class="reference" href="http://docs.python.org/whatsnew/2.5.html#pep-309-partial-function-application">partial</a> function.</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; add_partial = functools.partial(adder, 1)
+&gt;&gt;&gt; add_partial(y=10)
+11
+</pre>
+</div>
+<div class="section">
+<h1><a id="factories" name="factories">Factories</a></h1>
+<p>Factories are better implementation of the currying pattern:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; from Factory import *
+&gt;&gt;&gt; add_factory = Factory(adder, x=1)
+&gt;&gt;&gt; add_factory #doctest: +ELLIPSIS
+&lt;Factory(&lt;function adder at ...&gt;) at ...&gt;
+&gt;&gt;&gt; add_factory(y=10)
+11
+</pre>
+<p>Unlike lambdas and partial, factories can be inspected and modified:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; add_factory.x
+1
+&gt;&gt;&gt; add_factory.x = 2
+&gt;&gt;&gt; add_factory(y=10)
+12
+</pre>
+<p>The arguments that would be passed to the function can be examined, which
+is sometimes helpful in debugging:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; import pprint
+&gt;&gt;&gt; args, kwargs = add_factory.generateArgs(y=10)
+&gt;&gt;&gt; pprint.pprint(kwargs)
+{'x': 2, 'y': 10}
+&gt;&gt;&gt; args
+[]
+</pre>
+</div>
+<div class="section">
+<h1><a id="usage" name="usage">Usage</a></h1>
+<p>In the following examples, we mix in <strong>FactoryMixin</strong> to provide a
+<tt class="docutils literal"><span class="pre">factory</span></tt> classmethod on the base class.</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; class Foo(FactoryMixin):
+...     def __init__(self, foo):
+...         self.foo = foo
+...
+&gt;&gt;&gt; foo_factory = Foo.factory()
+&gt;&gt;&gt; foo_factory.foo = 66
+</pre>
+<p>This is equivalent to:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; Factory(Foo) #doctest:+ELLIPSIS
+&lt;Factory(&lt;class 'Foo'&gt;) at ...&gt;
+</pre>
+<p>Using the mixin isn't strictly necessary, but looks nice and is easier to spell.</p>
+<p>Factories have a <strong>bind</strong> method that can be used to set several attributes
+at once and returns the factory. It's useful for binding arguments
+without assigning the factory to a local variable.</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; def doStuff(foo_factory):
+...     return foo_factory.foo
+&gt;&gt;&gt; doStuff(foo_factory.bind(foo=11))
+11
+&gt;&gt;&gt; foo_factory2 = foo_factory.bind(foo=42)
+&gt;&gt;&gt; foo_factory2 is foo_factory
+True
+&gt;&gt;&gt; foo_factory.foo
+42
+</pre>
+<p>You can also bind attributes when constructing the factory:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; foo_factory = Factory(Foo, foo=11)
+&gt;&gt;&gt; foo_factory.foo
+11
+</pre>
+<p>Factories ensure that attributes match up with arguments; this makes
+finding errors easier (instead of raising a <tt class="docutils literal"><span class="pre">unexpected</span> <span class="pre">keyword</span> <span class="pre">argument</span></tt>
+later):</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; foo_factory.bar = 42  #doctest: +IGNORE_EXCEPTION_DETAIL
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: 'No such argument bar'
+</pre>
+<p>When calling the factory, arguments override attributes:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; foo = foo_factory(foo=1111)
+&gt;&gt;&gt; foo.foo
+1111
+</pre>
+<p>Each call returns a new instance:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; foo2 = foo_factory()
+&gt;&gt;&gt; foo2 is foo
+False
+</pre>
+<p>The set of valid attributes is the union of all <tt class="docutils literal"><span class="pre">__init__</span></tt> arguments in the
+inheritance chain:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; class Bar(Foo):
+...     def __init__(self, bar, **kwargs):
+...         super(Bar, self).__init__(**kwargs)
+...         self.bar = bar
+...
+&gt;&gt;&gt; bar_factory = Bar.factory()
+&gt;&gt;&gt; bar_factory.foo = 11
+&gt;&gt;&gt; bar_factory.bar = 42
+&gt;&gt;&gt; bar_factory.quux = 666  #doctest: +IGNORE_EXCEPTION_DETAIL
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: 'No such argument quux'
+&gt;&gt;&gt; bar = bar_factory()
+&gt;&gt;&gt; bar.foo
+11
+&gt;&gt;&gt; bar.bar
+42
+</pre>
+<p>Be sure to pass Factory a callable object (a class, not an an instance):</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; Factory(bar)  #doctest:+ELLIPSIS, +IGNORE_EXCEPTION_DETAIL
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: must provide known callable type, not &lt;Factory.Bar object at ...&gt;
+</pre>
+<p>Callable objects are fine, of course:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; class CallMe(object):
+...     def __init__(self, x):
+...         self.x = x
+...     def __call__(self, y):
+...         return self.x + y
+&gt;&gt;&gt; Factory(CallMe(1))(1)
+2
+</pre>
+<p>An existing factory can be passed as the <tt class="docutils literal"><span class="pre">callee</span></tt> of a new factory.</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; bar_factory = Bar.factory(bar=2)
+&gt;&gt;&gt; bar_factory2 = Factory(bar_factory, foo = 1)
+&gt;&gt;&gt; bar_factory is not bar_factory2
+True
+&gt;&gt;&gt; bar_factory2.bar
+2
+&gt;&gt;&gt; bar_factory2.bar = 4
+&gt;&gt;&gt; bar_factory.bar
+2
+</pre>
+<p>Unlike using lambdas, this does not create nested &quot;Russian dolls&quot;:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; bar_factory2.getCallable()
+&lt;class 'Bar'&gt;
+</pre>
+</div>
+<div class="section">
+<h1><a id="decorators" name="decorators">Decorators</a></h1>
+<p><strong>returnFactory</strong> is a decorator which <em>replaces</em> a function with its Factory-producing equivalent:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; &#64;returnFactory
+... def mult(x, y):
+...     return x * y
+&gt;&gt;&gt; fac = mult(x=10, y=5)
+&gt;&gt;&gt; isinstance(fac, Factory)
+True
+&gt;&gt;&gt; fac()
+50
+</pre>
+<p><strong>factoryAttribute</strong> adds a <tt class="docutils literal"><span class="pre">factory</span></tt> attribute to the decorated function:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; &#64;factoryAttribute
+... def adder(x, y):
+...     return x + y
+&gt;&gt;&gt; fac = adder.factory(x=10)
+&gt;&gt;&gt; isinstance(fac, Factory)
+True
+&gt;&gt;&gt; fac2 = adder.factory()
+&gt;&gt;&gt; fac is not fac2
+True
+&gt;&gt;&gt; fac(y=42)
+52
+</pre>
+<p><strong>factoryDescriptor</strong> produces instance methods with a <tt class="docutils literal"><span class="pre">factory</span></tt> attribute. Inside classes, use this descriptor instead of factoryAttribute. This class may be used as a decorator:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; class Quux(object):
+...     &#64;factoryDescriptor
+...     def doStuff(self, whatnot):
+...          pass
+&gt;&gt;&gt; quux = Quux()
+&gt;&gt;&gt; fac = quux.doStuff.factory(whatnot=42)
+&gt;&gt;&gt; isinstance(fac, Factory)
+True
+&gt;&gt;&gt; fac.whatnot
+42
+</pre>
+</div>
+<div class="section">
+<h1><a id="objecttemplates" name="objecttemplates">ObjectTemplates</a></h1>
+<p>ObjectTemplates are a template for creating objects. They work well with Factories.</p>
+<p>A <strong>Bunch</strong> is simply a bunch of attributes. Keyword arguments to a Bunch are turned into attributes:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; b = Bunch(pants=42, shirt=15)
+&gt;&gt;&gt; b.pants
+42
+&gt;&gt;&gt; b.shirt
+15
+</pre>
+<p>Calling a bunch returns a new copy:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; c = b()
+&gt;&gt;&gt; c.__dict__ == b.__dict__
+True
+&gt;&gt;&gt; c is b
+False
+</pre>
+<p>When called, an <strong>ObjectTemplate</strong> instance produces a new instance
+of <tt class="docutils literal"><span class="pre">bunchClass</span></tt>. Attributes on the template are passed as kwargs
+to the bunch.  However, if an attribute is callable, it is called
+and the return value is used instead:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; counter = itertools.count(1).next # an incrementing counter
+&gt;&gt;&gt; def color():
+...     return &quot;blue&quot;
+&gt;&gt;&gt; template = ObjectTemplate(size=42,
+...                           color=color,
+...                           count=counter,
+...                           bunchClass=Bunch)
+&gt;&gt;&gt; bunch = template()
+&gt;&gt;&gt; isinstance(bunch, Bunch)
+True
+&gt;&gt;&gt; bunch.size
+42
+&gt;&gt;&gt; bunch.color
+'blue'
+&gt;&gt;&gt; bunch.count
+1
+</pre>
+<p>Each call to the template produces a new bunch.  Any functions will
+be called again:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; bunch2 = template()
+&gt;&gt;&gt; bunch2.count
+2
+</pre>
+<p>If you want to pass a callable object to the bunch, wrap it in a lambda:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; template = ObjectTemplate()
+&gt;&gt;&gt; template.return_val = color
+&gt;&gt;&gt; template.a_function = lambda: color
+&gt;&gt;&gt; bunch = template()
+&gt;&gt;&gt; bunch.return_val
+'blue'
+&gt;&gt;&gt; bunch.a_function #doctest:+ELLIPSIS
+&lt;function color at ...&gt;
+</pre>
+</div>
+<div class="section">
+<h1><a id="bugs" name="bugs">Bugs</a></h1>
+<p>Bugs, feature requests and praise may be sent directly to <a class="reference" href="mailto:pfein&#64;pobox.com">the author</a>.</p>
+</div>
+</div>
+</body>
+</html>

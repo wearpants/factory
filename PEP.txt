@@ -1,0 +1,93 @@
+Factory
+```````
+Factory is an object-oriented approach to partial function application, also known as currying. The factory module is a more Pythonic implementation of this pattern. Some improvements include:
+
+- safer, as invalid arguments are detected immediately, instead of at call time
+- intelligent support for classes, instance methods & all other callables
+- bound arguments can be inspected and modified as attributes
+- no "Russian dolls" of nested lambdas
+- several convenient methods for (re)binding arguments
+
+Using Factories can:
+
+- ease functional programming
+- simplify writing callbacks
+- reduce bugs in concurrent applications
+- provide easy lazy evaluation
+
+.. contents:: :depth: 2
+
+>>> import functools
+>>> import itertools
+
+About Currying
+==============
+Currying creates a new function from an existing one by binding some of the original's arguments:
+
+>>> def adder(x, y):
+...     return x + y
+>>> add_lambda = lambda y: adder(1, y)
+>>> add_lambda #doctest: +ELLIPSIS
+<function <lambda> at ...>
+>>> add_lambda(10)
+11
+
+As of Python 2.5, this pattern is built in with the `partial <http://docs.python.org/whatsnew/2.5.html#pep-309-partial-function-application>`_ function.
+
+>>> add_partial = functools.partial(adder, 1)
+>>> add_partial  #doctest: +ELLIPSIS
+<functools.partial object at ...>
+>>> add_partial(y=10)
+11
+
+Releasing the Insides
+=====================
+Factories are a more Pythonic pattern:
+
+>>> from Factory import Factory as factory
+>>> add_factory = factory(adder, x=1)
+>>> add_factory #doctest: +ELLIPSIS,+SKIP
+<factory(<function adder at ...>) at ...>
+>>> add_factory(y=10)
+11
+
+Factories can be inspected and modified:
+
+>>> add_factory.x
+1
+>>> add_factory.x = 2
+>>> add_factory(y=10)
+12
+
+
+Early Error Detection
+=====================
+Factories ensure that attributes match up with arguments; this makes
+finding errors easier (instead of raising a ``unexpected keyword argument``
+later):
+
+>>> add_factory.pants = 42  #doctest: +IGNORE_EXCEPTION_DETAIL
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'No such argument pants'
+
+No Russian dolls
+================
+An existing factory can be passed as the ``callee`` of a new factory.
+
+>>> plus_factory = factory(add_factory, x = 10)
+>>> plus_factory is not add_factory
+True
+>>> plus_factory.x
+10
+>>> plus_factory.x = 100
+
+Unlike using lambdas, this does not create nested "Russian dolls":
+
+>>> plus_factory.getCallable() #doctest: +ELLIPSIS
+<function adder at ...>
+
+>>> add_factory(y=10)
+12
+>>> plus_factory(y=10)
+110

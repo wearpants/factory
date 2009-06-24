@@ -1,0 +1,106 @@
+Things to do with Factory
++++++++++++++++++++++++++
+
+Note: I haven't tried many of these.
+
+Alarm Clock
+``````````````
+Here's a sketch of an alarm clock.  We can inspect & even modify the Factory's argument binding's after creating it - something that cannot be done with a lambda.::
+
+
+ def run_at_time(func, time):
+     """run callable func some time in the future"""
+     # register func w/ event loop, etc..
+     pass
+ 
+ @attributeFactory
+ def play_mp3(fname):
+     """play mp3 file at fname"""
+     pass
+ 
+ # lambda style
+ lame_alarm = lambda : play_mp3("Beatles.mp3")
+ 
+ # factory style
+ better_alarm = play_mp3.factory("Beatles.mp3", time(2, 25, 00)
+ run_at_time(better_alarm)
+ 
+ # show the alarm
+ print "At", better_alarm.time, "you'll hear the sweet sounds of" better_alarm.fname[:-4]
+ 
+ # change the song we're going to play
+ better_alarm.fname = "Hendrix.mp3"
+
+Creating Objects in Threads
+```````````````````````````
+Factories can be used to create independent objects in separate threads::
+
+ connection_factory = Factory(mysqldb.connect, "example.com", "12345")
+ 
+ def do_stuff(conn_fact):
+     conn = conn_fact() # makes a *new* connection
+     cursor = conn.cursor()
+     cursor.execute("SELECT * FROM PANTS")
+     ...
+
+ for i in xrange(3):
+     t = threading.Thread(do_stuff, args=connection_factory)
+     t.start()
+
+Django-style URLConf
+````````````````````
+Factories should play nicely with Django-style URL conf::
+
+ # from django docs: 
+ (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+ 
+ # using factory:
+ attributeFactory(django.contrib.syndication.views.feed) # add .factory(..) to existing django func
+ (r'^feeds/(?P<url>.*)/$', django.contrib.syndication.views.feed.factory(feed_dict=feeds),
+
+Twisted Callbacks
+`````````````````
+Factories could be a better way to write Twisted callbacks::
+
+ class WebPageMonitor(object):
+     def __init__(self, sysadmin_email):
+         self.sysadmin_email = sysadmin_email
+     
+     @factoryDescriptor
+     def alert(self, x, url, status):
+         msg = "Things at", url, "are", status, "because", x
+         SMTP.mail(msg, to=self.sysadmin_email)
+ 
+ monitor = WebPageMonitor("root@host.com")
+ 
+ def checkPage(url):
+     """check on page at URL.  Returns deferred"""
+ 
+ def twisted_closure_style(urls_to_check):
+     for url in urls_to_check:
+         d = checkPage(url) 
+         
+         def callBack(x):
+             monitor.alert(x, url=url, status="all cool") 
+ 
+         def errBack(x):
+             monitor.alert(x, url=url, status="on fire")
+ 
+         d.addCallback(callBack))
+         d.addErrback(errBack)
+ 
+ def factory_style(urls_to_check):
+     for url in urls_to_check:
+         d = checkPage(url)
+         d.addCallback(monitor.alert.factory(status="all cool", url=url))
+         d.addErrback(monitor.alert.factory(status="on fire", url=url))
+ 
+ def lambda_style(urls_to_check):
+     for url in urls_to_check:
+         d = checkPage(url)
+         d.addCallback(lambda x: monitor.alert(x, status="all cool", url=url))
+         d.addErrback(lambda x: monitor.alert(x, status="on fire", url=url))
+
+ObjectTemplate
+``````````````
+

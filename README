@@ -1,0 +1,290 @@
+Overview
+========
+Factory is an object-oriented approach to partial function application, also known as currying. The Factory module is a more powerful implementation of this pattern. Some improvements include:
+
+- safer, as invalid arguments are detected immediately, instead of at call time
+- intelligent support for classes, instance methods & all other callables
+- bound arguments can be inspected and modified as attributes
+- several convenient methods for (re)binding arguments
+- no "Russian dolls" of nested lambdas
+
+Using Factories can:
+
+- simplify writing callbacks
+- reduce bugs in concurrent applications
+- provide easy lazy evaluation
+
+Installation
+============
+The Factory module is available from the `Cheeseshop <http://pypi.python.org/pypi/Factory/>`_.  The source code is available from the `Google Code project page <http://code.google.com/p/python-factory/>`_.
+
+The Factory module can be installed like any other pure Python module.  Setuptools is supported but not required.  You may also include the ``Factory.py`` file directly in your project's source tree, but you must retain the copyright notice and version and attribution information.
+
+To run tests for the module, execute the following commands in the ``Factory/`` directory:
+
+- ``python doctest_Factory.py``
+- ``nosetests test_Factory.py``
+
+About Currying
+==============
+Currying creates a new function from an existing one by binding some of the original's arguments:
+
+>>> def adder(x, y):
+...     return x + y
+>>> add_lambda = lambda y: adder(1, y)
+>>> add_lambda(10)
+11
+
+As of Python 2.5, this pattern is built in with the `partial <http://docs.python.org/whatsnew/2.5.html#pep-309-partial-function-application>`_ function.
+
+>>> add_partial = functools.partial(adder, 1)
+>>> add_partial(y=10)
+11
+
+Factories
+=========
+Factories are better implementation of the currying pattern:
+
+>>> from Factory import *
+>>> add_factory = Factory(adder, x=1)
+>>> add_factory #doctest: +ELLIPSIS
+<Factory(<function adder at ...>) at ...>
+>>> add_factory(y=10)
+11
+
+Unlike lambdas and partial, factories can be inspected and modified:
+
+>>> add_factory.x
+1
+>>> add_factory.x = 2
+>>> add_factory(y=10)
+12
+
+The arguments that would be passed to the function can be examined, which
+is sometimes helpful in debugging:
+
+>>> import pprint
+>>> args, kwargs = add_factory.generateArgs(y=10)
+>>> pprint.pprint(kwargs)
+{'x': 2, 'y': 10}
+>>> args
+[]
+
+Usage
+=====
+In the following examples, we mix in **FactoryMixin** to provide a
+``factory`` classmethod on the base class.
+
+>>> class Foo(FactoryMixin):
+...     def __init__(self, foo):
+...         self.foo = foo
+...
+>>> foo_factory = Foo.factory()
+>>> foo_factory.foo = 66
+
+This is equivalent to:
+
+>>> Factory(Foo) #doctest:+ELLIPSIS
+<Factory(<class 'Foo'>) at ...>
+
+Using the mixin isn't strictly necessary, but looks nice and is easier to spell.
+
+Factories have a **bind** method that can be used to set several attributes
+at once and returns the factory. It's useful for binding arguments
+without assigning the factory to a local variable.
+
+>>> def doStuff(foo_factory):
+...     return foo_factory.foo
+>>> doStuff(foo_factory.bind(foo=11))
+11
+>>> foo_factory2 = foo_factory.bind(foo=42)
+>>> foo_factory2 is foo_factory
+True
+>>> foo_factory.foo
+42
+
+You can also bind attributes when constructing the factory:
+
+>>> foo_factory = Factory(Foo, foo=11)
+>>> foo_factory.foo
+11
+
+Factories ensure that attributes match up with arguments; this makes
+finding errors easier (instead of raising a ``unexpected keyword argument``
+later):
+
+>>> foo_factory.bar = 42  #doctest: +IGNORE_EXCEPTION_DETAIL
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'No such argument bar'
+
+When calling the factory, arguments override attributes:
+
+>>> foo = foo_factory(foo=1111)
+>>> foo.foo
+1111
+
+Each call returns a new instance:
+
+>>> foo2 = foo_factory()
+>>> foo2 is foo
+False
+
+The set of valid attributes is the union of all ``__init__`` arguments in the
+inheritance chain:
+
+>>> class Bar(Foo):
+...     def __init__(self, bar, **kwargs):
+...         super(Bar, self).__init__(**kwargs)
+...         self.bar = bar
+...
+>>> bar_factory = Bar.factory()
+>>> bar_factory.foo = 11
+>>> bar_factory.bar = 42
+>>> bar_factory.quux = 666  #doctest: +IGNORE_EXCEPTION_DETAIL
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'No such argument quux'
+>>> bar = bar_factory()
+>>> bar.foo
+11
+>>> bar.bar
+42
+
+Be sure to pass Factory a callable object (a class, not an an instance):
+
+>>> Factory(bar)  #doctest:+ELLIPSIS, +IGNORE_EXCEPTION_DETAIL
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: must provide known callable type, not <Factory.Bar object at ...>
+
+Callable objects are fine, of course:
+
+>>> class CallMe(object):
+...     def __init__(self, x):
+...         self.x = x
+...     def __call__(self, y):
+...         return self.x + y
+>>> Factory(CallMe(1))(1)
+2
+
+An existing factory can be passed as the ``callee`` of a new factory.
+
+>>> bar_factory = Bar.factory(bar=2)
+>>> bar_factory2 = Factory(bar_factory, foo = 1)
+>>> bar_factory is not bar_factory2
+True
+>>> bar_factory2.bar
+2
+>>> bar_factory2.bar = 4
+>>> bar_factory.bar
+2
+
+Unlike using lambdas, this does not create nested "Russian dolls":
+
+>>> bar_factory2.getCallable()
+<class 'Bar'>
+
+Decorators
+==========
+**returnFactory** is a decorator which *replaces* a function with its Factory-producing equivalent:
+
+>>> @returnFactory
+... def mult(x, y):
+...     return x * y
+>>> fac = mult(x=10, y=5)
+>>> isinstance(fac, Factory)
+True
+>>> fac()
+50
+
+**factoryAttribute** adds a ``factory`` attribute to the decorated function:
+
+>>> @factoryAttribute
+... def adder(x, y):
+...     return x + y
+>>> fac = adder.factory(x=10)
+>>> isinstance(fac, Factory)
+True
+>>> fac2 = adder.factory()
+>>> fac is not fac2
+True
+>>> fac(y=42)
+52
+
+**factoryDescriptor** produces instance methods with a ``factory`` attribute. Inside classes, use this descriptor instead of factoryAttribute. This class may be used as a decorator:
+
+>>> class Quux(object):
+...     @factoryDescriptor
+...     def doStuff(self, whatnot):
+...          pass
+>>> quux = Quux()
+>>> fac = quux.doStuff.factory(whatnot=42)
+>>> isinstance(fac, Factory)
+True
+>>> fac.whatnot
+42
+
+ObjectTemplates
+================
+ObjectTemplates are a template for creating objects. They work well with Factories.
+
+A **Bunch** is simply a bunch of attributes. Keyword arguments to a Bunch are turned into attributes:
+
+>>> b = Bunch(pants=42, shirt=15)
+>>> b.pants
+42
+>>> b.shirt
+15
+
+Calling a bunch returns a new copy:
+
+>>> c = b()
+>>> c.__dict__ == b.__dict__
+True
+>>> c is b
+False
+
+When called, an **ObjectTemplate** instance produces a new instance
+of ``bunchClass``. Attributes on the template are passed as kwargs
+to the bunch.  However, if an attribute is callable, it is called
+and the return value is used instead:
+
+>>> counter = itertools.count(1).next # an incrementing counter
+>>> def color():
+...     return "blue"
+>>> template = ObjectTemplate(size=42,
+...                           color=color,
+...                           count=counter,
+...                           bunchClass=Bunch)
+>>> bunch = template()
+>>> isinstance(bunch, Bunch)
+True
+>>> bunch.size
+42
+>>> bunch.color
+'blue'
+>>> bunch.count
+1
+
+Each call to the template produces a new bunch.  Any functions will
+be called again:
+
+>>> bunch2 = template()
+>>> bunch2.count
+2
+
+If you want to pass a callable object to the bunch, wrap it in a lambda:
+
+>>> template = ObjectTemplate()
+>>> template.return_val = color
+>>> template.a_function = lambda: color
+>>> bunch = template()
+>>> bunch.return_val
+'blue'
+>>> bunch.a_function #doctest:+ELLIPSIS
+<function color at ...>
+
+Bugs
+====
+Bugs, feature requests and praise may be sent directly to `the author <mailto:pfein@pobox.com>`_.

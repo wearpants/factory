@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Things to do with Factory</title>
+<style type="text/css">
+
+/*
+Author: Peter Parente
+Date: 2008/01/22
+Version: 1.0
+Copyright: This stylesheet has been placed in the public domain - free to edit and use for all uses.
+*/
+
+body {
+  font: 100% serif;
+  background: #ffffff;
+  color: black;
+  margin: 2em;
+  padding: 0em 2em;
+  background-color: honeydew;
+}
+
+p.topic-title {
+  font-weight: bold;
+}
+
+table.docinfo {
+  text-align: left;
+  margin: 2em 0em;
+}
+
+a[href] {
+  color: #436976;
+  background-color: transparent;
+}
+
+a.toc-backref {
+  text-decoration: none;
+}
+
+h1 a[href] {
+  color: #003a6b;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a.strong {
+  font-weight: bold;
+}
+
+img {
+  margin: 0;
+  border: 0;
+}
+
+p {
+  margin: 0.5em 0 1em 0;
+  line-height: 1.5em;
+}
+
+p a:visited {
+  color: purple;
+  background-color: transparent;
+}
+
+p a:active {
+  color: red;
+  background-color: transparent;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+p img {
+  border: 0;
+  margin: 0;
+}
+
+p.rubric {
+  font-weight: bold;
+  font-style: italic;
+}
+
+h1.title {
+  color: #003a6b;
+  font-size: 250%;
+  margin-bottom: 0em;
+}
+
+h2.subtitle {
+  color: #003a6b;
+  border-bottom: 0px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #555;
+  background-color: transparent;
+  margin: 0em;
+  padding-top: 0.5em;
+}
+
+h1 {
+  font-size: 160%;
+  margin-bottom: 0.5em;
+  border-bottom: 2px solid #aaa;
+}
+
+h2 {
+  font-size: 140%;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid #aaa;
+}
+
+h3 {
+  font-size: 130%;
+  margin-bottom: 0.5em;
+}
+
+h4 {
+  font-size: 110%;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+h5 {
+  font-size: 105%;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+h6 {
+  font-size: 100%;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+dt {
+  font-style: italic;
+}
+
+dd {
+  margin-bottom: 1.5em;
+}
+
+div.admonition, div.note, div.tip, div.caution, div.important {
+  margin: 2em 2em;
+  padding: 0em 1em;
+  border-top: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  border-bottom: 2px solid #555;
+  border-right: 2px solid #555;
+}
+
+div.important {
+  background: transparent url('../images/important.png') 10px 2px no-repeat;
+}
+
+div.caution {
+  background: transparent url('../images/caution.png') 10px 2px no-repeat;
+}
+
+div.note {
+  background: transparent url('../images/note.png') 10px 2px no-repeat;
+}
+
+div.tip {
+  background: transparent url('../images/tip.png') 10px 2px no-repeat;
+}
+
+div.admonition-example {
+  background: transparent url('../images/tip.png') 10px 2px no-repeat;
+}
+
+div.admonition-critical-example {
+  background: transparent url('../images/important.png') 10px 2px no-repeat;
+}
+
+p.admonition-title {
+  font-weight: bold;
+  border-bottom: 1px solid #aaa;
+  padding-left: 30px;
+}
+
+table.docutils {
+  text-align: left;
+  border: 1px solid gray;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0em;
+}
+
+table.docutils caption {
+  font-style: italic;
+}
+
+table.docutils td, table.docutils th {
+  padding: 0.25em 0.5em;
+}
+
+table.docutils th {
+  background-color: #dddddd;
+}
+
+div.sidebar {
+  width: 33%;
+  float: right;
+  margin: 0em 2em;
+  padding: 0em 1em;
+  border-top: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  border-bottom: 2px solid #555;
+  border-right: 2px solid #555;
+}
+
+p.sidebar-title {
+  margin-bottom: 0em;
+  color: #003a6b;
+  border-bottom: 1px solid #aaa;
+  font-weight: bold;
+}
+
+p.sidebar-subtitle {
+  margin-top: 0em;
+  font-style: italic;
+  color: #003a6b;
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+  background-color: lightsteelblue;
+}
+
+code, tt {
+  color: #000066;
+}
+</style>
+</head>
+<body>
+<div class="document" id="things-to-do-with-factory">
+<h1 class="title">Things to do with Factory</h1>
+<p>Note: I haven't tried many of these.</p>
+<div class="section">
+<h1><a id="alarm-clock" name="alarm-clock">Alarm Clock</a></h1>
+<p>Here's a sketch of an alarm clock.  We can inspect &amp; even modify the Factory's argument binding's after creating it - something that cannot be done with a lambda.:</p>
+<pre class="literal-block">
+def run_at_time(func, time):
+    &quot;&quot;&quot;run callable func some time in the future&quot;&quot;&quot;
+    # register func w/ event loop, etc..
+    pass
+
+&#64;attributeFactory
+def play_mp3(fname):
+    &quot;&quot;&quot;play mp3 file at fname&quot;&quot;&quot;
+    pass
+
+# lambda style
+lame_alarm = lambda : play_mp3(&quot;Beatles.mp3&quot;)
+
+# factory style
+better_alarm = play_mp3.factory(&quot;Beatles.mp3&quot;, time(2, 25, 00)
+run_at_time(better_alarm)
+
+# show the alarm
+print &quot;At&quot;, better_alarm.time, &quot;you'll hear the sweet sounds of&quot; better_alarm.fname[:-4]
+
+# change the song we're going to play
+better_alarm.fname = &quot;Hendrix.mp3&quot;
+</pre>
+</div>
+<div class="section">
+<h1><a id="creating-objects-in-threads" name="creating-objects-in-threads">Creating Objects in Threads</a></h1>
+<p>Factories can be used to create independent objects in separate threads:</p>
+<pre class="literal-block">
+connection_factory = Factory(mysqldb.connect, &quot;example.com&quot;, &quot;12345&quot;)
+
+def do_stuff(conn_fact):
+    conn = conn_fact() # makes a *new* connection
+    cursor = conn.cursor()
+    cursor.execute(&quot;SELECT * FROM PANTS&quot;)
+    ...
+
+for i in xrange(3):
+    t = threading.Thread(do_stuff, args=connection_factory)
+    t.start()
+</pre>
+</div>
+<div class="section">
+<h1><a id="django-style-urlconf" name="django-style-urlconf">Django-style URLConf</a></h1>
+<p>Factories should play nicely with Django-style URL conf:</p>
+<pre class="literal-block">
+# from django docs:
+(r'^feeds/(?P&lt;url&gt;.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+
+# using factory:
+attributeFactory(django.contrib.syndication.views.feed) # add .factory(..) to existing django func
+(r'^feeds/(?P&lt;url&gt;.*)/$', django.contrib.syndication.views.feed.factory(feed_dict=feeds),
+</pre>
+</div>
+<div class="section">
+<h1><a id="twisted-callbacks" name="twisted-callbacks">Twisted Callbacks</a></h1>
+<p>Factories could be a better way to write Twisted callbacks:</p>
+<pre class="literal-block">
+class WebPageMonitor(object):
+    def __init__(self, sysadmin_email):
+        self.sysadmin_email = sysadmin_email
+
+    &#64;factoryDescriptor
+    def alert(self, x, url, status):
+        msg = &quot;Things at&quot;, url, &quot;are&quot;, status, &quot;because&quot;, x
+        SMTP.mail(msg, to=self.sysadmin_email)
+
+monitor = WebPageMonitor(&quot;root&#64;host.com&quot;)
+
+def checkPage(url):
+    &quot;&quot;&quot;check on page at URL.  Returns deferred&quot;&quot;&quot;
+
+def twisted_closure_style(urls_to_check):
+    for url in urls_to_check:
+        d = checkPage(url)
+
+        def callBack(x):
+            monitor.alert(x, url=url, status=&quot;all cool&quot;)
+
+        def errBack(x):
+            monitor.alert(x, url=url, status=&quot;on fire&quot;)
+
+        d.addCallback(callBack))
+        d.addErrback(errBack)
+
+def factory_style(urls_to_check):
+    for url in urls_to_check:
+        d = checkPage(url)
+        d.addCallback(monitor.alert.factory(status=&quot;all cool&quot;, url=url))
+        d.addErrback(monitor.alert.factory(status=&quot;on fire&quot;, url=url))
+
+def lambda_style(urls_to_check):
+    for url in urls_to_check:
+        d = checkPage(url)
+        d.addCallback(lambda x: monitor.alert(x, status=&quot;all cool&quot;, url=url))
+        d.addErrback(lambda x: monitor.alert(x, status=&quot;on fire&quot;, url=url))
+</pre>
+</div>
+<div class="section">
+<h1><a id="objecttemplate" name="objecttemplate">ObjectTemplate</a></h1>
+</div>
+</div>
+</body>
+</html>
