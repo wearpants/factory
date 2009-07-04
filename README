@@ -46,7 +46,7 @@ Factories
 Factories are better implementation of the currying pattern:
 
 >>> from Factory import *
->>> add_factory = Factory(adder, x=1)
+>>> add_factory = bind(adder, x=1)
 >>> add_factory #doctest: +ELLIPSIS
 <Factory(<function adder at ...>) at ...>
 >>> add_factory(y=10)
@@ -64,7 +64,7 @@ The arguments that would be passed to the function can be examined, which
 is sometimes helpful in debugging:
 
 >>> import pprint
->>> args, kwargs = add_factory.generateArgs(y=10)
+>>> args, kwargs = add_factory.produce(y=10)
 >>> pprint.pprint(kwargs)
 {'x': 2, 'y': 10}
 >>> args
@@ -79,12 +79,12 @@ In the following examples, we mix in **FactoryMixin** to provide a
 ...     def __init__(self, foo):
 ...         self.foo = foo
 ...
->>> foo_factory = Foo.factory()
+>>> foo_factory = Foo.bind()
 >>> foo_factory.foo = 66
 
 This is equivalent to:
 
->>> Factory(Foo) #doctest:+ELLIPSIS
+>>> bind(Foo) #doctest:+ELLIPSIS
 <Factory(<class 'Foo'>) at ...>
 
 Using the mixin isn't strictly necessary, but looks nice and is easier to spell.
@@ -105,7 +105,7 @@ True
 
 You can also bind attributes when constructing the factory:
 
->>> foo_factory = Factory(Foo, foo=11)
+>>> foo_factory = bind(Foo, foo=11)
 >>> foo_factory.foo
 11
 
@@ -138,7 +138,7 @@ inheritance chain:
 ...         super(Bar, self).__init__(**kwargs)
 ...         self.bar = bar
 ...
->>> bar_factory = Bar.factory()
+>>> bar_factory = Bar.bind()
 >>> bar_factory.foo = 11
 >>> bar_factory.bar = 42
 >>> bar_factory.quux = 666  #doctest: +IGNORE_EXCEPTION_DETAIL
@@ -160,8 +160,8 @@ TypeError: must provide known callable type, not <Factory.Bar object at ...>
 
 An existing factory can be passed as the ``callee`` of a new factory.
 
->>> bar_factory = Bar.factory(bar=2)
->>> bar_factory2 = Factory(bar_factory, foo = 1)
+>>> bar_factory = Bar.bind(bar=2)
+>>> bar_factory2 = bind(bar_factory, foo = 1)
 >>> bar_factory is not bar_factory2
 True
 >>> bar_factory2.bar
@@ -193,10 +193,10 @@ True
 >>> @factoryAttribute
 ... def adder(x, y):
 ...     return x + y
->>> fac = adder.factory(x=10)
+>>> fac = adder.bind(x=10)
 >>> isinstance(fac, Factory)
 True
->>> fac2 = adder.factory()
+>>> fac2 = adder.bind()
 >>> fac is not fac2
 True
 >>> fac(y=42)
@@ -209,7 +209,7 @@ True
 ...     def doStuff(self, whatnot):
 ...          pass
 >>> quux = Quux()
->>> fac = quux.doStuff.factory(whatnot=42)
+>>> fac = quux.doStuff.bind(whatnot=42)
 >>> isinstance(fac, Factory)
 True
 >>> fac.whatnot

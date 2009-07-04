@@ -37,7 +37,7 @@ import itertools
 import new
 import functools
 
-__all__ = ['Factory', 'FactoryMixin', 'returnFactory', 'factoryAttribute',
+__all__ = ['bind', 'Factory', 'FactoryMixin', 'returnFactory', 'factoryAttribute',
            'factoryDescriptor', 'Bunch', 'ObjectTemplate']
 
 class Factory(object):
@@ -130,7 +130,7 @@ class Factory(object):
         else:
             super(Factory, self).__setattr__(attr, value)
 
-    def generateArgs(self, *args, **kwargs):
+    def produce(self, *args, **kwargs):
         """return the (args, kwargs) that would be used when the Factory is called"""
         args_dict = self.__dict__.copy()
         args_dict.update(kwargs)
@@ -138,7 +138,7 @@ class Factory(object):
         return (args, args_dict)
 
     def __call__(self, *args, **kwargs):
-        (args, args_dict) = self.generateArgs(*args, **kwargs)
+        (args, args_dict) = self.produce(*args, **kwargs)
         return self.getCallable()(*args, **args_dict)
 
     def bind(self, *args, **kwargs):
@@ -159,11 +159,13 @@ class Factory(object):
     def __repr__(self):
         return "<Factory(%r) at %s>" % (self.__callable, hex(id(self)))
 
+bind = Factory
+
 class FactoryMixin(object):
-    """a mixin providing a ``factory`` method, which produces Factories"""
+    """a mixin providing a ``bind`` method, which produces Factories"""
 
     @classmethod
-    def factory(cls, *args, **kwargs):
+    def bind(cls, *args, **kwargs):
         """return a Factory for the class, binding kwargs"""
         return Factory(cls).bind(*args, **kwargs)
 
@@ -175,14 +177,14 @@ def returnFactory(func):
     return wrapper
 
 def factoryAttribute(func):
-    """adds a factory attribute to the decorated func"""
-    def factory(*args, **kwargs):
+    """adds a ``bind`` attribute to the decorated func"""
+    def bind(*args, **kwargs):
         return Factory(func).bind(*args, **kwargs)
-    func.factory = factory
+    func.bind = bind
     return func
 
 class factoryDescriptor(object):
-    """a descriptor that produces instance methods with a factory attribute.
+    """a descriptor that produces instance methods with a ``bind`` attribute.
 
     Inside classes, use this descriptor instead of factoryAttribute. This class may be used as a decorator.
     """
@@ -195,7 +197,7 @@ class factoryDescriptor(object):
         return FactoryInstanceMethod(self.func, obj, cls)
 
 class FactoryInstanceMethod(object):
-    """an instancemethod-like object that adds a factory attribute. See factoryAttribute"""
+    """an instancemethod-like object that adds ``bind`` factory attribute. See factoryAttribute"""
 
     __slots__ = ['im_func', 'im_self', 'im_class', '__call__']
 
@@ -205,7 +207,7 @@ class FactoryInstanceMethod(object):
         self.im_class = cls
         self.__call__ = new.instancemethod(func, obj, cls)
 
-    def factory(self, *args, **kwargs):
+    def bind(self, *args, **kwargs):
         return Factory(self.__call__).bind(*args, **kwargs)
 
 class Bunch(object):

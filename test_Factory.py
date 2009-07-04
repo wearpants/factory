@@ -2,6 +2,9 @@ import operator
 from nose.tools import *
 import Factory
 
+def test_alias():
+    assert Factory.Factory is Factory.bind
+
 def test_callable_object():
     class CallMe(object):
         def __init__(self, x):
