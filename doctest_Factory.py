@@ -7,7 +7,8 @@ if __name__ == "__main__":
     import itertools
 
     extraglobs = {'functools': functools,
-                  'itertools': itertools}
+                  'itertools': itertools,
+                  '__name__': None} # fix __main__ issues
 
     doctest.testfile("README", extraglobs=extraglobs)
     doctest.testfile("PEP")
