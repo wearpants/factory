@@ -158,16 +158,6 @@ Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 TypeError: must provide known callable type, not <Factory.Bar object at ...>
 
-Callable objects are fine, of course:
-
->>> class CallMe(object):
-...     def __init__(self, x):
-...         self.x = x
-...     def __call__(self, y):
-...         return self.x + y
->>> Factory(CallMe(1))(1)
-2
-
 An existing factory can be passed as the ``callee`` of a new factory.
 
 >>> bar_factory = Bar.factory(bar=2)

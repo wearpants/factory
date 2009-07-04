@@ -2,6 +2,16 @@ import operator
 from nose.tools import *
 import Factory
 
+def test_callable_object():
+    class CallMe(object):
+        def __init__(self, x):
+            self.x = x
+        def __call__(self, y):
+            return self.x + y
+    fac = Factory.Factory(CallMe(1))
+    assert fac(1) == 2
+
+
 def test_missing_attr():
     fac=Factory.Factory(lambda x: x)
     assert_raises(AttributeError, getattr, fac, 'x')
