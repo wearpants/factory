@@ -215,9 +215,24 @@ class Bunch(object):
 
     Calling a Bunch returns a new copy.
     """
+    
+    __slots__ = ['__dict__', '__iter__', '__contains__',
+                 'iteritems', 'iterkeys', 'itervalues',
+                 'keys', 'values', 'items']
+
     def __init__(self, **kwargs):
         """kwargs are turned into attrs"""
         self.__dict__.update(**kwargs)
+        
+        ## dict-like methods
+        self.__iter__ = self.__dict__.__iter__
+        self.__contains__ = self.__dict__.__contains__
+        self.iteritems = self.__dict__.iteritems
+        self.iterkeys = self.__dict__.iterkeys
+        self.itervalues = self.__dict__.itervalues
+        self.keys = self.__dict__.keys
+        self.values = self.__dict__.values
+        self.items = self.__dict__.items
 
     def __call__(self):
         return self.__class__(**self.__dict__)
@@ -234,6 +249,10 @@ class Bunch(object):
     def __repr__(self):
         return '%s(%s)' % (self.__class__.__name__,
                            ', '.join('%s=%r' % kv for kv in self.__dict__.iteritems()))
+                           
+    def applyTo(self, func):
+        """call func using __dict__ as kwargs"""
+        return func(**self.__dict__)
 
 class Mold(object):
     """a template for creating objects"""

@@ -235,6 +235,21 @@ True
 >>> c is b
 False
 
+The attributes on a bunch can be used as keyword arguments to a function:
+
+>>> def wash_clothes(pants, shirt):
+...     return "washed %d pants and %d shirts"%(pants, shirt)
+>>> b.applyTo(wash_clothes)
+'washed 42 pants and 15 shirts'
+
+Bunches provide several dict-style accessors:
+>>> b.get('pants')
+42
+>>> b.get('shoes', 'notfound')
+'notfound'
+>>> sorted(b.keys())
+['pants', 'shirt']
+
 When called, an **Mold** instance produces a new Bunch. Attributes on the mold are passed as kwargs to the bunch.  However, if an attribute is callable, it is called and the return value is used instead:
 
 >>> counter = itertools.count(1).next # an incrementing counter
