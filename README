@@ -215,9 +215,9 @@ True
 >>> fac.whatnot
 42
 
-ObjectTemplates
+Molds
 ================
-ObjectTemplates are a template for creating objects. They work well with Factories.
+Molds are a template for creating objects. They work well with Factories.
 
 A **Bunch** is simply a bunch of attributes. Keyword arguments to a Bunch are turned into attributes:
 
@@ -235,19 +235,16 @@ True
 >>> c is b
 False
 
-When called, an **ObjectTemplate** instance produces a new instance
-of ``bunchClass``. Attributes on the template are passed as kwargs
-to the bunch.  However, if an attribute is callable, it is called
-and the return value is used instead:
+When called, an **Mold** instance produces a new Bunch. Attributes on the mold are passed as kwargs to the bunch.  However, if an attribute is callable, it is called and the return value is used instead:
 
 >>> counter = itertools.count(1).next # an incrementing counter
 >>> def color():
 ...     return "blue"
->>> template = ObjectTemplate(size=42,
-...                           color=color,
-...                           count=counter,
-...                           bunchClass=Bunch)
->>> bunch = template()
+>>> mold = Mold(size=42,
+...             color=color,
+...             count=counter,
+...             bunchClass=Bunch)
+>>> bunch = mold()
 >>> isinstance(bunch, Bunch)
 True
 >>> bunch.size
@@ -257,19 +254,19 @@ True
 >>> bunch.count
 1
 
-Each call to the template produces a new bunch.  Any functions will
+Each call to the mold produces a new bunch.  Any functions will
 be called again:
 
->>> bunch2 = template()
+>>> bunch2 = mold()
 >>> bunch2.count
 2
 
 If you want to pass a callable object to the bunch, wrap it in a lambda:
 
->>> template = ObjectTemplate()
->>> template.return_val = color
->>> template.a_function = lambda: color
->>> bunch = template()
+>>> mold = Mold()
+>>> mold.return_val = color
+>>> mold.a_function = lambda: color
+>>> bunch = mold()
 >>> bunch.return_val
 'blue'
 >>> bunch.a_function #doctest:+ELLIPSIS

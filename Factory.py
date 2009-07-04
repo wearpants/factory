@@ -38,7 +38,7 @@ import new
 import functools
 
 __all__ = ['bind', 'Factory', 'FactoryMixin', 'returnFactory', 'factoryAttribute',
-           'factoryDescriptor', 'Bunch', 'ObjectTemplate']
+           'factoryDescriptor', 'Bunch', 'Mold']
 
 class Factory(object):
     """Object oriented partial function application"""
@@ -235,7 +235,7 @@ class Bunch(object):
         return '%s(%s)' % (self.__class__.__name__,
                            ', '.join('%s=%r' % kv for kv in self.__dict__.iteritems()))
 
-class ObjectTemplate(object):
+class Mold(object):
     """a template for creating objects"""
 
     # we make bunchClass a slot to make iterating through __dict__ easier
