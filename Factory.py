@@ -253,6 +253,10 @@ class Bunch(object):
     def applyTo(self, func):
         """call func using __dict__ as kwargs"""
         return func(**self.__dict__)
+    
+    def asDict(self):
+        """return a dictionary copy of the bunch"""
+        return self.__dict__.copy()
 
 class Mold(object):
     """a template for creating objects"""
