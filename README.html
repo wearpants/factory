@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
 <title></title>
 <style type="text/css">
 
@@ -242,8 +242,10 @@ code, tt {
 </head>
 <body>
 <div class="document">
-<div class="section">
-<h1><a id="overview" name="overview">Overview</a></h1>
+
+
+<div class="section" id="overview">
+<h1>Overview</h1>
 <p>Factory is an object-oriented approach to partial function application, also known as currying. The Factory module is a more powerful implementation of this pattern. Some improvements include:</p>
 <ul class="simple">
 <li>safer, as invalid arguments are detected immediately, instead of at call time</li>
@@ -259,9 +261,9 @@ code, tt {
 <li>provide easy lazy evaluation</li>
 </ul>
 </div>
-<div class="section">
-<h1><a id="installation" name="installation">Installation</a></h1>
-<p>The Factory module is available from the <a class="reference" href="http://pypi.python.org/pypi/Factory/">Cheeseshop</a>.  The source code is available from the <a class="reference" href="http://code.google.com/p/python-factory/">Google Code project page</a>.</p>
+<div class="section" id="installation">
+<h1>Installation</h1>
+<p>The Factory module is available from the <a class="reference external" href="http://pypi.python.org/pypi/Factory/">Cheeseshop</a>.  The source code is available from the <a class="reference external" href="http://code.google.com/p/python-factory/">Google Code project page</a>.</p>
 <p>The Factory module can be installed like any other pure Python module.  Setuptools is supported but not required.  You may also include the <tt class="docutils literal"><span class="pre">Factory.py</span></tt> file directly in your project's source tree, but you must retain the copyright notice and version and attribution information.</p>
 <p>To run tests for the module, execute the following commands in the <tt class="docutils literal"><span class="pre">Factory/</span></tt> directory:</p>
 <ul class="simple">
@@ -269,8 +271,8 @@ code, tt {
 <li><tt class="docutils literal"><span class="pre">nosetests</span> <span class="pre">test_Factory.py</span></tt></li>
 </ul>
 </div>
-<div class="section">
-<h1><a id="about-currying" name="about-currying">About Currying</a></h1>
+<div class="section" id="about-currying">
+<h1>About Currying</h1>
 <p>Currying creates a new function from an existing one by binding some of the original's arguments:</p>
 <pre class="doctest-block">
 &gt;&gt;&gt; def adder(x, y):
@@ -279,19 +281,19 @@ code, tt {
 &gt;&gt;&gt; add_lambda(10)
 11
 </pre>
-<p>As of Python 2.5, this pattern is built in with the <a class="reference" href="http://docs.python.org/whatsnew/2.5.html#pep-309-partial-function-application">partial</a> function.</p>
+<p>As of Python 2.5, this pattern is built in with the <a class="reference external" href="http://docs.python.org/whatsnew/2.5.html#pep-309-partial-function-application">partial</a> function.</p>
 <pre class="doctest-block">
 &gt;&gt;&gt; add_partial = functools.partial(adder, 1)
 &gt;&gt;&gt; add_partial(y=10)
 11
 </pre>
 </div>
-<div class="section">
-<h1><a id="factories" name="factories">Factories</a></h1>
+<div class="section" id="factories">
+<h1>Factories</h1>
 <p>Factories are better implementation of the currying pattern:</p>
 <pre class="doctest-block">
 &gt;&gt;&gt; from Factory import *
-&gt;&gt;&gt; add_factory = Factory(adder, x=1)
+&gt;&gt;&gt; add_factory = bind(adder, x=1)
 &gt;&gt;&gt; add_factory #doctest: +ELLIPSIS
 &lt;Factory(&lt;function adder at ...&gt;) at ...&gt;
 &gt;&gt;&gt; add_factory(y=10)
@@ -309,15 +311,15 @@ code, tt {
 is sometimes helpful in debugging:</p>
 <pre class="doctest-block">
 &gt;&gt;&gt; import pprint
-&gt;&gt;&gt; args, kwargs = add_factory.generateArgs(y=10)
+&gt;&gt;&gt; args, kwargs = add_factory.produce(y=10)
 &gt;&gt;&gt; pprint.pprint(kwargs)
 {'x': 2, 'y': 10}
 &gt;&gt;&gt; args
 []
 </pre>
 </div>
-<div class="section">
-<h1><a id="usage" name="usage">Usage</a></h1>
+<div class="section" id="usage">
+<h1>Usage</h1>
 <p>In the following examples, we mix in <strong>FactoryMixin</strong> to provide a
 <tt class="docutils literal"><span class="pre">factory</span></tt> classmethod on the base class.</p>
 <pre class="doctest-block">
@@ -325,12 +327,12 @@ is sometimes helpful in debugging:</p>
 ...     def __init__(self, foo):
 ...         self.foo = foo
 ...
-&gt;&gt;&gt; foo_factory = Foo.factory()
+&gt;&gt;&gt; foo_factory = Foo.bind()
 &gt;&gt;&gt; foo_factory.foo = 66
 </pre>
 <p>This is equivalent to:</p>
 <pre class="doctest-block">
-&gt;&gt;&gt; Factory(Foo) #doctest:+ELLIPSIS
+&gt;&gt;&gt; bind(Foo) #doctest:+ELLIPSIS
 &lt;Factory(&lt;class 'Foo'&gt;) at ...&gt;
 </pre>
 <p>Using the mixin isn't strictly necessary, but looks nice and is easier to spell.</p>
@@ -350,7 +352,7 @@ True
 </pre>
 <p>You can also bind attributes when constructing the factory:</p>
 <pre class="doctest-block">
-&gt;&gt;&gt; foo_factory = Factory(Foo, foo=11)
+&gt;&gt;&gt; foo_factory = bind(Foo, foo=11)
 &gt;&gt;&gt; foo_factory.foo
 11
 </pre>
@@ -383,7 +385,7 @@ inheritance chain:</p>
 ...         super(Bar, self).__init__(**kwargs)
 ...         self.bar = bar
 ...
-&gt;&gt;&gt; bar_factory = Bar.factory()
+&gt;&gt;&gt; bar_factory = Bar.bind()
 &gt;&gt;&gt; bar_factory.foo = 11
 &gt;&gt;&gt; bar_factory.bar = 42
 &gt;&gt;&gt; bar_factory.quux = 666  #doctest: +IGNORE_EXCEPTION_DETAIL
@@ -403,20 +405,10 @@ Traceback (most recent call last):
   File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
 TypeError: must provide known callable type, not &lt;Factory.Bar object at ...&gt;
 </pre>
-<p>Callable objects are fine, of course:</p>
-<pre class="doctest-block">
-&gt;&gt;&gt; class CallMe(object):
-...     def __init__(self, x):
-...         self.x = x
-...     def __call__(self, y):
-...         return self.x + y
-&gt;&gt;&gt; Factory(CallMe(1))(1)
-2
-</pre>
 <p>An existing factory can be passed as the <tt class="docutils literal"><span class="pre">callee</span></tt> of a new factory.</p>
 <pre class="doctest-block">
-&gt;&gt;&gt; bar_factory = Bar.factory(bar=2)
-&gt;&gt;&gt; bar_factory2 = Factory(bar_factory, foo = 1)
+&gt;&gt;&gt; bar_factory = Bar.bind(bar=2)
+&gt;&gt;&gt; bar_factory2 = bind(bar_factory, foo = 1)
 &gt;&gt;&gt; bar_factory is not bar_factory2
 True
 &gt;&gt;&gt; bar_factory2.bar
@@ -431,8 +423,8 @@ True
 &lt;class 'Bar'&gt;
 </pre>
 </div>
-<div class="section">
-<h1><a id="decorators" name="decorators">Decorators</a></h1>
+<div class="section" id="decorators">
+<h1>Decorators</h1>
 <p><strong>returnFactory</strong> is a decorator which <em>replaces</em> a function with its Factory-producing equivalent:</p>
 <pre class="doctest-block">
 &gt;&gt;&gt; &#64;returnFactory
@@ -449,10 +441,10 @@ True
 &gt;&gt;&gt; &#64;factoryAttribute
 ... def adder(x, y):
 ...     return x + y
-&gt;&gt;&gt; fac = adder.factory(x=10)
+&gt;&gt;&gt; fac = adder.bind(x=10)
 &gt;&gt;&gt; isinstance(fac, Factory)
 True
-&gt;&gt;&gt; fac2 = adder.factory()
+&gt;&gt;&gt; fac2 = adder.bind()
 &gt;&gt;&gt; fac is not fac2
 True
 &gt;&gt;&gt; fac(y=42)
@@ -465,16 +457,16 @@ True
 ...     def doStuff(self, whatnot):
 ...          pass
 &gt;&gt;&gt; quux = Quux()
-&gt;&gt;&gt; fac = quux.doStuff.factory(whatnot=42)
+&gt;&gt;&gt; fac = quux.doStuff.bind(whatnot=42)
 &gt;&gt;&gt; isinstance(fac, Factory)
 True
 &gt;&gt;&gt; fac.whatnot
 42
 </pre>
 </div>
-<div class="section">
-<h1><a id="objecttemplates" name="objecttemplates">ObjectTemplates</a></h1>
-<p>ObjectTemplates are a template for creating objects. They work well with Factories.</p>
+<div class="section" id="molds">
+<h1>Molds</h1>
+<p>Molds are a template for creating objects. They work well with Factories.</p>
 <p>A <strong>Bunch</strong> is simply a bunch of attributes. Keyword arguments to a Bunch are turned into attributes:</p>
 <pre class="doctest-block">
 &gt;&gt;&gt; b = Bunch(pants=42, shirt=15)
@@ -483,27 +475,30 @@ True
 &gt;&gt;&gt; b.shirt
 15
 </pre>
-<p>Calling a bunch returns a new copy:</p>
+<p>The attributes on a bunch can be used as keyword arguments to a function:</p>
 <pre class="doctest-block">
-&gt;&gt;&gt; c = b()
-&gt;&gt;&gt; c.__dict__ == b.__dict__
-True
-&gt;&gt;&gt; c is b
-False
+&gt;&gt;&gt; def wash_clothes(pants, shirt):
+...     return &quot;washed %d pants and %d shirts&quot;%(pants, shirt)
+&gt;&gt;&gt; b.applyTo(wash_clothes)
+'washed 42 pants and 15 shirts'
 </pre>
-<p>When called, an <strong>ObjectTemplate</strong> instance produces a new instance
-of <tt class="docutils literal"><span class="pre">bunchClass</span></tt>. Attributes on the template are passed as kwargs
-to the bunch.  However, if an attribute is callable, it is called
-and the return value is used instead:</p>
+<p>Bunches provide several dict-style accessors:
+&gt;&gt;&gt; b.get('pants')
+42
+&gt;&gt;&gt; b.get('shoes', 'notfound')
+'notfound'
+&gt;&gt;&gt; sorted(b.keys())
+['pants', 'shirt']</p>
+<p>A <strong>Mold</strong> instance can be hardened to produce a new Bunch. Attributes on the mold are passed as kwargs to the bunch.  However, if an attribute is callable, it is called and the return value is used instead:</p>
 <pre class="doctest-block">
 &gt;&gt;&gt; counter = itertools.count(1).next # an incrementing counter
 &gt;&gt;&gt; def color():
 ...     return &quot;blue&quot;
-&gt;&gt;&gt; template = ObjectTemplate(size=42,
-...                           color=color,
-...                           count=counter,
-...                           bunchClass=Bunch)
-&gt;&gt;&gt; bunch = template()
+&gt;&gt;&gt; mold = Mold(size=42,
+...             color=color,
+...             count=counter,
+...             bunchClass=Bunch)
+&gt;&gt;&gt; bunch = mold.harden()
 &gt;&gt;&gt; isinstance(bunch, Bunch)
 True
 &gt;&gt;&gt; bunch.size
@@ -513,28 +508,36 @@ True
 &gt;&gt;&gt; bunch.count
 1
 </pre>
-<p>Each call to the template produces a new bunch.  Any functions will
+<p>Each call to the mold produces a new bunch.  Any functions will
 be called again:</p>
 <pre class="doctest-block">
-&gt;&gt;&gt; bunch2 = template()
+&gt;&gt;&gt; bunch2 = mold.harden()
 &gt;&gt;&gt; bunch2.count
 2
 </pre>
 <p>If you want to pass a callable object to the bunch, wrap it in a lambda:</p>
 <pre class="doctest-block">
-&gt;&gt;&gt; template = ObjectTemplate()
-&gt;&gt;&gt; template.return_val = color
-&gt;&gt;&gt; template.a_function = lambda: color
-&gt;&gt;&gt; bunch = template()
+&gt;&gt;&gt; mold = Mold()
+&gt;&gt;&gt; mold.return_val = color
+&gt;&gt;&gt; mold.a_function = lambda: color
+&gt;&gt;&gt; bunch = mold.harden()
 &gt;&gt;&gt; bunch.return_val
 'blue'
 &gt;&gt;&gt; bunch.a_function #doctest:+ELLIPSIS
 &lt;function color at ...&gt;
 </pre>
+<p>For consistency a bunch can be hardened as well. This returns a new copy:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; c = b.harden()
+&gt;&gt;&gt; c.__dict__ == b.__dict__
+True
+&gt;&gt;&gt; c is b
+False
+</pre>
 </div>
-<div class="section">
-<h1><a id="bugs" name="bugs">Bugs</a></h1>
-<p>Bugs, feature requests and praise may be sent directly to <a class="reference" href="mailto:pfein&#64;pobox.com">the author</a>.</p>
+<div class="section" id="bugs">
+<h1>Bugs</h1>
+<p>Bugs, feature requests and praise may be sent directly to <a class="reference external" href="mailto:pfein&#64;pobox.com">the author</a>.</p>
 </div>
 </div>
 </body>

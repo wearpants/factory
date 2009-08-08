@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
 <title>ObjectTemplates</title>
 <style type="text/css">
 
@@ -243,6 +243,7 @@ code, tt {
 <body>
 <div class="document" id="objecttemplates">
 <h1 class="title">ObjectTemplates</h1>
+
 <p>ObjectTemplates are a template for creating objects. They work well with Factories.</p>
 <p>A <strong>Bunch</strong> is simply a bunch of attributes. Keyword arguments to a Bunch are turned into attributes:</p>
 <pre class="doctest-block">
@@ -314,7 +315,7 @@ config.debug_level = logging.DEBUG
 
 # app code
 def do_stuff_with_config(config):
-     config = config() # call any factories
+     config = config.harden() # call any factories
 
      output = file(config.path)
      logging.setLevel(config.debug_level)

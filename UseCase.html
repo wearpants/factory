@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
 <title>Things to do with Factory</title>
 <style type="text/css">
 
@@ -243,9 +243,10 @@ code, tt {
 <body>
 <div class="document" id="things-to-do-with-factory">
 <h1 class="title">Things to do with Factory</h1>
+
 <p>Note: I haven't tried many of these.</p>
-<div class="section">
-<h1><a id="alarm-clock" name="alarm-clock">Alarm Clock</a></h1>
+<div class="section" id="alarm-clock">
+<h1>Alarm Clock</h1>
 <p>Here's a sketch of an alarm clock.  We can inspect &amp; even modify the Factory's argument binding's after creating it - something that cannot be done with a lambda.:</p>
 <pre class="literal-block">
 def run_at_time(func, time):
@@ -272,8 +273,8 @@ print &quot;At&quot;, better_alarm.time, &quot;you'll hear the sweet sounds of&q
 better_alarm.fname = &quot;Hendrix.mp3&quot;
 </pre>
 </div>
-<div class="section">
-<h1><a id="creating-objects-in-threads" name="creating-objects-in-threads">Creating Objects in Threads</a></h1>
+<div class="section" id="creating-objects-in-threads">
+<h1>Creating Objects in Threads</h1>
 <p>Factories can be used to create independent objects in separate threads:</p>
 <pre class="literal-block">
 connection_factory = Factory(mysqldb.connect, &quot;example.com&quot;, &quot;12345&quot;)
@@ -289,8 +290,8 @@ for i in xrange(3):
     t.start()
 </pre>
 </div>
-<div class="section">
-<h1><a id="django-style-urlconf" name="django-style-urlconf">Django-style URLConf</a></h1>
+<div class="section" id="django-style-urlconf">
+<h1>Django-style URLConf</h1>
 <p>Factories should play nicely with Django-style URL conf:</p>
 <pre class="literal-block">
 # from django docs:
@@ -301,8 +302,8 @@ attributeFactory(django.contrib.syndication.views.feed) # add .factory(..) to ex
 (r'^feeds/(?P&lt;url&gt;.*)/$', django.contrib.syndication.views.feed.factory(feed_dict=feeds),
 </pre>
 </div>
-<div class="section">
-<h1><a id="twisted-callbacks" name="twisted-callbacks">Twisted Callbacks</a></h1>
+<div class="section" id="twisted-callbacks">
+<h1>Twisted Callbacks</h1>
 <p>Factories could be a better way to write Twisted callbacks:</p>
 <pre class="literal-block">
 class WebPageMonitor(object):
@@ -345,8 +346,8 @@ def lambda_style(urls_to_check):
         d.addErrback(lambda x: monitor.alert(x, status=&quot;on fire&quot;, url=url))
 </pre>
 </div>
-<div class="section">
-<h1><a id="objecttemplate" name="objecttemplate">ObjectTemplate</a></h1>
+<div class="section" id="objecttemplate">
+<h1>ObjectTemplate</h1>
 </div>
 </div>
 </body>

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
 <title>Factory</title>
 <style type="text/css">
 
@@ -243,6 +243,7 @@ code, tt {
 <body>
 <div class="document" id="factory">
 <h1 class="title">Factory</h1>
+
 <p>Factory is an object-oriented approach to partial function application, also known as currying. The factory module is a more Pythonic implementation of this pattern. Some improvements include:</p>
 <ul class="simple">
 <li>safer, as invalid arguments are detected immediately, instead of at call time</li>
@@ -258,21 +259,21 @@ code, tt {
 <li>reduce bugs in concurrent applications</li>
 <li>provide easy lazy evaluation</li>
 </ul>
-<div class="contents topic">
-<p class="topic-title first"><a id="contents" name="contents">Contents</a></p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference" href="#about-currying" id="id1" name="id1">About Currying</a></li>
-<li><a class="reference" href="#releasing-the-insides" id="id2" name="id2">Releasing the Insides</a></li>
-<li><a class="reference" href="#early-error-detection" id="id3" name="id3">Early Error Detection</a></li>
-<li><a class="reference" href="#no-russian-dolls" id="id4" name="id4">No Russian dolls</a></li>
+<li><a class="reference internal" href="#about-currying" id="id1">About Currying</a></li>
+<li><a class="reference internal" href="#releasing-the-insides" id="id2">Releasing the Insides</a></li>
+<li><a class="reference internal" href="#early-error-detection" id="id3">Early Error Detection</a></li>
+<li><a class="reference internal" href="#no-russian-dolls" id="id4">No Russian dolls</a></li>
 </ul>
 </div>
 <pre class="doctest-block">
 &gt;&gt;&gt; import functools
 &gt;&gt;&gt; import itertools
 </pre>
-<div class="section">
-<h1><a class="toc-backref" href="#id1" id="about-currying" name="about-currying">About Currying</a></h1>
+<div class="section" id="about-currying">
+<h1><a class="toc-backref" href="#id1">About Currying</a></h1>
 <p>Currying creates a new function from an existing one by binding some of the original's arguments:</p>
 <pre class="doctest-block">
 &gt;&gt;&gt; def adder(x, y):
@@ -283,7 +284,7 @@ code, tt {
 &gt;&gt;&gt; add_lambda(10)
 11
 </pre>
-<p>As of Python 2.5, this pattern is built in with the <a class="reference" href="http://docs.python.org/whatsnew/2.5.html#pep-309-partial-function-application">partial</a> function.</p>
+<p>As of Python 2.5, this pattern is built in with the <a class="reference external" href="http://docs.python.org/whatsnew/2.5.html#pep-309-partial-function-application">partial</a> function.</p>
 <pre class="doctest-block">
 &gt;&gt;&gt; add_partial = functools.partial(adder, 1)
 &gt;&gt;&gt; add_partial  #doctest: +ELLIPSIS
@@ -292,8 +293,8 @@ code, tt {
 11
 </pre>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id2" id="releasing-the-insides" name="releasing-the-insides">Releasing the Insides</a></h1>
+<div class="section" id="releasing-the-insides">
+<h1><a class="toc-backref" href="#id2">Releasing the Insides</a></h1>
 <p>Factories are a more Pythonic pattern:</p>
 <pre class="doctest-block">
 &gt;&gt;&gt; from Factory import Factory as factory
@@ -312,8 +313,8 @@ code, tt {
 12
 </pre>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id3" id="early-error-detection" name="early-error-detection">Early Error Detection</a></h1>
+<div class="section" id="early-error-detection">
+<h1><a class="toc-backref" href="#id3">Early Error Detection</a></h1>
 <p>Factories ensure that attributes match up with arguments; this makes
 finding errors easier (instead of raising a <tt class="docutils literal"><span class="pre">unexpected</span> <span class="pre">keyword</span> <span class="pre">argument</span></tt>
 later):</p>
@@ -324,8 +325,8 @@ Traceback (most recent call last):
 AttributeError: 'No such argument pants'
 </pre>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id4" id="no-russian-dolls" name="no-russian-dolls">No Russian dolls</a></h1>
+<div class="section" id="no-russian-dolls">
+<h1><a class="toc-backref" href="#id4">No Russian dolls</a></h1>
 <p>An existing factory can be passed as the <tt class="docutils literal"><span class="pre">callee</span></tt> of a new factory.</p>
 <pre class="doctest-block">
 &gt;&gt;&gt; plus_factory = factory(add_factory, x = 10)
