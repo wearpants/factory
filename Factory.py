@@ -234,7 +234,7 @@ class Bunch(object):
         self.values = self.__dict__.values
         self.items = self.__dict__.items
 
-    def __call__(self):
+    def harden(self):
         return self.__class__(**self.__dict__)
     
     def get(self, name, default=None):
@@ -273,7 +273,7 @@ class Mold(object):
         self.bunchClass = bunchClass
         self.__dict__.update(**kwargs)
 
-    def __call__(self):
+    def harden(self):
         # build a "list" of 2-tuples (key, bunch_value) where bunch_value is
         # the orig_value, unless the orig_value is callable, in which case
         # bunch_value is the result of calling orig_value

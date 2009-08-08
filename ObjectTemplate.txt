@@ -73,7 +73,7 @@ ObjectTemplate can be used for configuration::
  
  # app code
  def do_stuff_with_config(config):
-      config = config() # call any factories
+      config = config.harden() # call any factories
       
       output = file(config.path)
       logging.setLevel(config.debug_level)

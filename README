@@ -216,7 +216,7 @@ True
 42
 
 Molds
-================
+=====
 Molds are a template for creating objects. They work well with Factories.
 
 A **Bunch** is simply a bunch of attributes. Keyword arguments to a Bunch are turned into attributes:
@@ -226,14 +226,6 @@ A **Bunch** is simply a bunch of attributes. Keyword arguments to a Bunch are tu
 42
 >>> b.shirt
 15
-
-Calling a bunch returns a new copy:
-
->>> c = b()
->>> c.__dict__ == b.__dict__
-True
->>> c is b
-False
 
 The attributes on a bunch can be used as keyword arguments to a function:
 
@@ -250,7 +242,7 @@ Bunches provide several dict-style accessors:
 >>> sorted(b.keys())
 ['pants', 'shirt']
 
-When called, an **Mold** instance produces a new Bunch. Attributes on the mold are passed as kwargs to the bunch.  However, if an attribute is callable, it is called and the return value is used instead:
+A **Mold** instance can be hardened to produce a new Bunch. Attributes on the mold are passed as kwargs to the bunch.  However, if an attribute is callable, it is called and the return value is used instead:
 
 >>> counter = itertools.count(1).next # an incrementing counter
 >>> def color():
@@ -259,7 +251,7 @@ When called, an **Mold** instance produces a new Bunch. Attributes on the mold a
 ...             color=color,
 ...             count=counter,
 ...             bunchClass=Bunch)
->>> bunch = mold()
+>>> bunch = mold.harden()
 >>> isinstance(bunch, Bunch)
 True
 >>> bunch.size
@@ -272,7 +264,7 @@ True
 Each call to the mold produces a new bunch.  Any functions will
 be called again:
 
->>> bunch2 = mold()
+>>> bunch2 = mold.harden()
 >>> bunch2.count
 2
 
@@ -281,11 +273,20 @@ If you want to pass a callable object to the bunch, wrap it in a lambda:
 >>> mold = Mold()
 >>> mold.return_val = color
 >>> mold.a_function = lambda: color
->>> bunch = mold()
+>>> bunch = mold.harden()
 >>> bunch.return_val
 'blue'
 >>> bunch.a_function #doctest:+ELLIPSIS
 <function color at ...>
+
+For consistency a bunch can be hardened as well. This returns a new copy:
+
+>>> c = b.harden()
+>>> c.__dict__ == b.__dict__
+True
+>>> c is b
+False
+
 
 Bugs
 ====

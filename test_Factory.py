@@ -166,7 +166,7 @@ def test_getattr():
 
 def test_bunch_equals():
     b = Factory.Bunch(pants="jeans", shirt="dressy")
-    c = b()
+    c = b.harden()
     assert c is not b
     assert c == b
     c.shirt = "sloppy"
