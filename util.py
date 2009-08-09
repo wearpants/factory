@@ -1,4 +1,15 @@
 import new
+import os.path
+
+def normalizePath(path):
+    """
+    @arg path: a filesystem path
+    @type path: string
+    
+    @returns: a fully-expanded, normalized path
+    @rtype: string
+    """
+    return os.path.normpath(os.path.expanduser(os.path.expandvars(path)))
 
 def importString(source, filename, globals_=None, locals_=None):
     """construct a module from source code.

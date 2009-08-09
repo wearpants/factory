@@ -279,3 +279,6 @@ class Mold(object):
         # bunch_value is the result of calling orig_value
         return self.bunchClass(**dict((k, (v() if callable(v) else v))
                                       for k, v in self.__dict__.iteritems()))
+    def __repr__(self):
+        return '%s(%s)' % (self.__class__.__name__,
+                           ', '.join('%s=%r' % kv for kv in self.__dict__.iteritems()))
