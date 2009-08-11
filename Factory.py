@@ -235,7 +235,13 @@ class Bunch(object):
         self.items = self.__dict__.items
 
     def harden(self):
-        return self.__class__(**self.__dict__)
+        d = {}
+        for k, v in self.__dict__.iteritems():
+            if hasattr(v, 'harden'):
+                d[k] = v.harden()
+            else:
+                d[k] = v
+        return self.__class__(**d)
     
     def get(self, name, default=None):
         return getattr(self, name, default)
@@ -274,11 +280,20 @@ class Mold(object):
         self.__dict__.update(**kwargs)
 
     def harden(self):
-        # build a "list" of 2-tuples (key, bunch_value) where bunch_value is
-        # the orig_value, unless the orig_value is callable, in which case
-        # bunch_value is the result of calling orig_value
-        return self.bunchClass(**dict((k, (v() if callable(v) else v))
-                                      for k, v in self.__dict__.iteritems()))
+        # build a dict (key, bunch_value) where bunch_value is the orig_value,
+        # unless the orig_value is callable or a Mold/Bunch, in which case
+        # bunch_value is the result of calling/hardening orig_value
+        d = {}
+        for k, v in self.__dict__.iteritems():
+            if hasattr(v, 'harden'):
+                v = v.harden()
+            elif callable(v):
+                v = v()
+           
+            d[k] = v
+
+        return self.bunchClass(**d)
+        
     def __repr__(self):
         return '%s(%s)' % (self.__class__.__name__,
                            ', '.join('%s=%r' % kv for kv in self.__dict__.iteritems()))

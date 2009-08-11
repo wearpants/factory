@@ -287,6 +287,16 @@ True
 >>> c is b
 False
 
+Hardening is recursive:
+
+>>> mold.sub = Mold()
+>>> mold.sub.total = bind(sum, [1, 2, 3])
+>>> bunch = mold.harden()
+>>> isinstance(bunch.sub, Bunch)
+True
+>>> bunch.sub.total
+6
+
 
 Bugs
 ====

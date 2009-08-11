@@ -181,3 +181,12 @@ def test_bunch_get():
     assert b.get('pants', 'foo') == 'jeans'
     assert b.get('nonesuch', 'foo') == 'foo'
     assert b.get('nonesuch') is None
+
+def test_bunch_recursive():
+    b = Factory.Bunch(pants="jeans")
+    b.sub = Factory.Bunch(shirt="buttons")
+    b2 = b.harden()
+    assert b is not b2
+    assert b == b2
+    assert b.sub is not b2.sub
+    assert b.sub == b2.sub
